@@ -6,14 +6,14 @@ public class Ejercicio10{
         Scanner entradaText = new Scanner(System.in);
 
         System.out.print("Ingrese su año de nacimiento: ");
-        int ega = entrada.nextInt();
+        int age = entrada.nextInt();
         System.out.print("Ingrese el dia y meses de nacimiento: ");
         String mes = entradaText.nextLine();
 
-        if (ega >= 2006 && ega<=2023){
+        if (age >= 2006 && age<=2023){
             System.out.print("Es menor de edad.");
         }
-        else if(ega >2023){
+        else if(age >2023){
             System.out.print("Fecha invalida.");
         }
         else{
