@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class MayorMenor{
+public class Ejercicio06{
     public static void main(String[]args){
         Scanner entrada = new Scanner(System.in);
 
@@ -12,29 +12,17 @@ public class MayorMenor{
         int n3 = entrada.nextInt();
 
         int mayor = obtenerMayor(n1, n2, n3);
-        int menor = obtenerMenor(n1, n2, n3);
 
         System.out.println(" ");
         System.out.println("El mayor de los numero es: "+mayor);
-        System.out.println("El menor de los numero es: "+menor);
-    }
-
+    }   
     public static int obtenerMayor(int n1, int n2, int n3){
-        if(n1>n2 && n1> n3){
+        if(n1>=n2 && n1>=n3){
             return n1;
         }
-        if(n2> n1 && n2> n3){
+        if(n2>=n1 && n2>=n3){
             return n2;
         }
         return n3;
     }
-     public static int obtenerMenor(int n1, int n2, int n3){
-        if(n1<n2 && n1< n3){
-            return n1;
-        }
-        if(n2< n1 && n2< n3){
-            return n2;
-        }
-        return n3;
-    } 
 }
