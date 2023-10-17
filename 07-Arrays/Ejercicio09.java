@@ -11,8 +11,8 @@ public class Ejercicio09{
 
         int array [] = new int [n];
 
-        for(int j=0; i<array.length; i++){
-            array[i]= (int) (Math.random()*10+1);
+        for(int j=0; j<array.length; j++){
+            array[j]= (int) (Math.random()*10+1);
         }
 
         int i;
