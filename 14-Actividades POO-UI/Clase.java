@@ -13,7 +13,8 @@ public class Clase extends JFrame{
     JTextField textInteres;
     JTextField textCuota;
     JButton calcular;
-    ActionListener procesar;
+    JLabel facturaArea;
+
 
     public Clase(){
         contenedor = new JPanel();
@@ -25,15 +26,9 @@ public class Clase extends JFrame{
         textInteres = new JTextField();
         textCuota = new JTextField();
         calcular = new JButton();
-        /*procesar = new ActionListener(){
-            @Override
-            public void actionPerformed(){
-                calcularInteres();
-            }
-        };*/
+        facturaArea = new JLabel();
 
         initComponents();
-
     }
 
     public void initComponents(){
@@ -92,10 +87,33 @@ public class Clase extends JFrame{
         restriccion.fill = GridBagConstraints.NONE;
         calcular.setFont(new Font("Garamond", Font.BOLD, 15));
         calcular.setText("Calcular");
-        calcular.addActionListener(procesar);
+        calcular.addActionListener(new ActionListener(){  
+        @Override
+        public void actionPerformed(ActionEvent e){
+            int valor1 = Integer.parseInt(textCapital.getText());
+            float valor2 = Float.parseFloat(textInteres.getText());
+            int valor3 = Integer.parseInt(textCuota.getText());
+
+            double porcentaje = valor2 / 100;
+            double valorCompleto = valor1 + (valor1 * porcentaje);
+            double valorCuota = valorCompleto / valor3;
+
+            String factura = "<html>Factura: <br>"+(int)valorCompleto+"<br>";
+
+            for (int i = 0; i < valor3; i++) {
+                factura +="<br>"+"Cuota N. "+(i+1)+": "+(int)valorCuota;
+            }
+            factura+="</html>";
+
+            facturaArea.setText(factura);
+        }
+    });
         contenedor.add(calcular, restriccion);
 
-        
+        restriccion.gridwidth = 2;
+        restriccion.gridx = 0;
+        restriccion.gridy = 5;
+        contenedor.add(facturaArea, restriccion);
 
         contenedor.setBackground( Color.white);
 
@@ -107,9 +125,4 @@ public class Clase extends JFrame{
         setResizable(false);
         setVisible(true);
     }
-
-    public void calcularInteres(){
-        
-    }
-
 }
