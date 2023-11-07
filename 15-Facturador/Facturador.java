@@ -21,9 +21,12 @@ public class Facturador extends JFrame{
     JLabel cant;
     JTextField textCedula1;
     JTextField textCedula2;
+    JTextField textId;
+    JTextField textNombre;
+    JTextField textCant;
     JButton buscar1;
     JButton buscar2;
-    JButton add;
+    JButton bAdd;
 
     public Facturador(){
         contenedor = new JPanel();
@@ -42,10 +45,13 @@ public class Facturador extends JFrame{
         textCedula2 = new JTextField();
         buscar1 = new JButton();
         buscar2 = new JButton();
-        add = new JButton();
+        bAdd = new JButton();
         nombreCliente = new JLabel();
         nombreVendedor = new JLabel();
         direccionCliente = new JLabel();
+        textId = new JTextField();
+        textNombre = new JTextField();
+        textCant = new JTextField();
 
         initComponents();
     }
@@ -61,7 +67,7 @@ public class Facturador extends JFrame{
         r.gridx = 0;
         r.gridy = 0;
         r.fill = GridBagConstraints.BOTH;
-        datosCliente.setFont(new Font("Garamond", Font.BOLD, 35));
+        datosCliente.setFont(new Font("Garamond", Font.BOLD, 28));
         datosCliente.setText("DATOS CLIENTE:");
         contenedor.add(datosCliente, r);
 
@@ -84,6 +90,8 @@ public class Facturador extends JFrame{
         r.gridy = 1;
         r.fill = GridBagConstraints.BOTH;
         contenedor.add(textCedula1, r);
+        //textCedula1.setEnabled(false);
+        //textCedula1.setBackground(Color.gray);
 
         r.gridwidth = 1;
         r.gridheight = 1;
@@ -146,7 +154,7 @@ public class Facturador extends JFrame{
         r.gridx = 0;
         r.gridy = 4;
         r.fill = GridBagConstraints.BOTH;
-        datosVendedor.setFont(new Font("Garamond", Font.BOLD, 32));
+        datosVendedor.setFont(new Font("Garamond", Font.BOLD, 28));
         datosVendedor.setText("DATOS VENDEDOR: ");
         contenedor.add(datosVendedor, r);
 
@@ -180,10 +188,77 @@ public class Facturador extends JFrame{
         buscar2.setText("BUSCAR");
         contenedor.add(buscar2, r);
 
+        r.gridwidth = 1;
+        r.gridheight = 1;
+        r.weightx = 20;
+        r.weighty = 1;
+        r.gridx = 0;
+        r.gridy = 6;
+        r.fill = GridBagConstraints.BOTH;
+        nombres2.setFont(new Font("Garamond", Font.BOLD, 16));
+        nombres2.setText("NOMBRES: ");
+        contenedor.add(nombres2, r);
+
+        r.gridwidth = 3;
+        r.gridheight = 1;
+        r.weightx = 80;
+        r.weighty = 1;
+        r.gridx = 1;
+        r.gridy = 6;
+        r.fill = GridBagConstraints.BOTH;
+        nombreVendedor.setFont(new Font("Garamond", Font.BOLD, 16));
+        nombreVendedor.setText("");
+        contenedor.add(nombreVendedor, r);
+
+        r.gridwidth = 4;
+        r.gridheight = 1;
+        r.weightx = 100;
+        r.weighty = 1;
+        r.gridx = 0;
+        r.gridy = 7;
+        r.fill = GridBagConstraints.BOTH;
+        listaProductos.setFont(new Font("Garamond", Font.BOLD, 28));
+        listaProductos.setText("LISTA PRODUCTOS FACTURADOS: ");
+        contenedor.add(listaProductos, r);
+
+        r.gridwidth = 1;
+        r.gridheight = 1;
+        r.weightx = 20;
+        r.weighty = 1;
+        r.gridx = 0;
+        r.gridy = 8;
+        r.fill = GridBagConstraints.BOTH;
+        id.setFont(new Font("Garamond", Font.BOLD, 16));
+        id.setText("ID");
+        contenedor.add(id, r);
+
+        r.gridwidth = 3;
+        r.gridheight = 1;
+        r.weightx = 20;
+        r.weighty = 1;
+        r.gridx = 2;
+        r.gridy = 8;
+        r.fill = GridBagConstraints.BOTH;
+        nombre.setFont(new Font("Garamond", Font.BOLD, 16));
+        nombre.setText("NOMBRE");
+        contenedor.add(nombre, r);
+
+        r.gridwidth = 1;
+        r.gridheight = 1;
+        r.weightx = 20;
+        r.weighty = 1;
+        r.gridx = 3;
+        r.gridy = 8;
+        r.fill = GridBagConstraints.BOTH;
+        cant.setFont(new Font("Garamond", Font.BOLD, 16));
+        cant.setText("CANT");
+        contenedor.add(cant, r);
+
         add(contenedor);
         setTitle("formato de Prestamos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(550, 700);
+        setSize(765, 970);
+        //setSize(550, 700);
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
