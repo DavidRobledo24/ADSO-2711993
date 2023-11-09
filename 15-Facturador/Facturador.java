@@ -27,6 +27,10 @@ public class Facturador extends JFrame{
     JButton buscar1;
     JButton buscar2;
     JButton bAdd;
+    JScrollPane scroll;
+    JTextArea subtotal;
+    JLabel valor;
+    JLabel total;
 
     public Facturador(){
         contenedor = new JPanel();
@@ -52,6 +56,10 @@ public class Facturador extends JFrame{
         textId = new JTextField();
         textNombre = new JTextField();
         textCant = new JTextField();
+        subtotal = new JTextArea(30, 1);
+        scroll = new JScrollPane(subtotal);
+        valor = new JLabel();
+        total = new JLabel();
 
         initComponents();
     }
@@ -223,7 +231,7 @@ public class Facturador extends JFrame{
 
         r.gridwidth = 1;
         r.gridheight = 1;
-        r.weightx = 20;
+        r.weightx = 25;
         r.weighty = 1;
         r.gridx = 0;
         r.gridy = 8;
@@ -234,9 +242,9 @@ public class Facturador extends JFrame{
 
         r.gridwidth = 3;
         r.gridheight = 1;
-        r.weightx = 20;
+        r.weightx = 50;
         r.weighty = 1;
-        r.gridx = 2;
+        r.gridx = 1;
         r.gridy = 8;
         r.fill = GridBagConstraints.BOTH;
         nombre.setFont(new Font("Garamond", Font.BOLD, 16));
@@ -245,7 +253,7 @@ public class Facturador extends JFrame{
 
         r.gridwidth = 1;
         r.gridheight = 1;
-        r.weightx = 20;
+        r.weightx = 25;
         r.weighty = 1;
         r.gridx = 3;
         r.gridy = 8;
@@ -253,12 +261,84 @@ public class Facturador extends JFrame{
         cant.setFont(new Font("Garamond", Font.BOLD, 16));
         cant.setText("CANT");
         contenedor.add(cant, r);
+        
+        r.gridwidth = 1;
+        r.gridheight = 1;
+        r.weightx = 20;
+        r.weighty = 1;
+        r.gridx = 0;
+        r.gridy = 9;
+        r.fill = GridBagConstraints.BOTH;
+        textId.setEnabled(false);
+        textId.setBackground(Color.lightGray);
+        contenedor.add(textId, r);
+
+        r.gridwidth = 1;
+        r.gridheight = 1;
+        r.weightx = 40;
+        r.weighty = 1;
+        r.gridx = 1;
+        r.gridy = 9;
+        r.fill = GridBagConstraints.BOTH;
+        textNombre.setEnabled(false);
+        textNombre.setBackground(Color.lightGray);
+        contenedor.add(textNombre, r);
+        
+        r.gridwidth = 1;
+        r.gridheight = 1;
+        r.weightx = 20;
+        r.weighty = 1;
+        r.gridx = 3;
+        r.gridy = 9;
+        r.fill = GridBagConstraints.BOTH;
+        textCant.setEnabled(false);
+        textCant.setBackground(Color.lightGray);
+        contenedor.add(textCant, r);
+
+        r.gridwidth = 1;
+        r.gridheight = 1;
+        r.weightx = 20;
+        r.weighty = 1;
+        r.gridx = 4;
+        r.gridy = 9;
+        bAdd.setText("ADD"); 
+        contenedor.add(bAdd,r);
+
+        r.gridwidth = 4;
+        r.gridheight = 1;
+        r.weightx = 100;
+        r.weighty = 90;
+        r.gridx = 0;
+        r.gridy = 10;
+        contenedor.add(scroll, r);
+
+        r.gridwidth = 1;
+        r.gridheight = 1;
+        r.weightx = 50;
+        r.weighty = 1;
+        r.gridx = 0;
+        r.gridy = 11;
+        valor.setFont(new Font("Garamond", Font.BOLD, 20));
+        valor.setText("$ 22");
+        contenedor.add(valor, r);
+
+        r.gridwidth = 1;
+        r.gridheight = 1;
+        r.weightx = 50;
+        r.weighty = 1;
+        r.gridx = 1;
+        r.gridy = 11;
+        total.setFont(new Font("Garamond", Font.BOLD, 20));
+        total.setText("TOTAL");
+        contenedor.add(total, r);
+
+        contenedor.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         add(contenedor);
         setTitle("formato de Prestamos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(765, 970);
-        //setSize(550, 700);
+        //setSize(765, 970);
+        setSize(550, 700);
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
