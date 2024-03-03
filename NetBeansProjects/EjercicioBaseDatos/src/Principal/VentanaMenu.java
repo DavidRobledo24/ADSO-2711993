@@ -1,17 +1,23 @@
 package Principal;
 
-import java.awt.Color;
+import Utils.ClassPersona;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.table.DefaultTableCellRenderer;
 
 
 
-public class Menu extends javax.swing.JFrame {
+public class VentanaMenu extends javax.swing.JFrame {
+    ClassPersona listaPersonas[];
 
-
-    public Menu() {
+    
+    public VentanaMenu() { 
+        
+        listaPersonas = new ClassPersona[10];
+        listaPersonas[0] = new ClassPersona("1010105189", "David", "Robledo", "3217254256","david@gmial.com");
+        listaPersonas[1] = new ClassPersona("3645667", "Manuel", "castillo", "4564635","manuel@gmial.com"); 
         initComponents();
         initAlternComponents();
     }
@@ -20,6 +26,8 @@ public class Menu extends javax.swing.JFrame {
     public void initAlternComponents(){
         setVisible(true);
         setTitle("Menu");
+        
+        
         
 
         Image crear_usuario = getToolkit().createImage(ClassLoader.getSystemResource("imagenes/crear_usuario.png"));
@@ -154,19 +162,67 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCrearActionPerformed
-        
+        for (int i = 0; i < listaPersonas.length && listaPersonas[i] != null; i++) {
+            VentanaMenu ventanaActual = this;
+            final int posicion = i;
+
+            for (ActionListener al : BtnCrear.getActionListeners()) {
+                BtnCrear.removeActionListener(al);
+            }
+
+ 
+            BtnCrear.addActionListener(new ActionListener() {
+                    @Override
+                public void actionPerformed(ActionEvent e) {    
+                VentanaCrearUsuario ventana = new VentanaCrearUsuario(ventanaActual, posicion);
+                }
+            });    
+        }     
     }//GEN-LAST:event_BtnCrearActionPerformed
 
     private void BtnLeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLeerActionPerformed
-        
+        for (ActionListener al : BtnLeer.getActionListeners()) {
+        BtnLeer.removeActionListener(al);
+    }
+    
+    // Agregar un ActionListener al botón
+    BtnLeer.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Iterar sobre el array listaPersonas
+            for(int i = 0; i < listaPersonas.length && listaPersonas[i] != null; i++){
+                VentanaMenu ventanaActual = VentanaMenu.this; // Acceder al objeto VentanaMenu desde ActionListener
+                
+                // Obtener la posición seleccionada
+                int posicion = i;
+                
+                // Crear una instancia de VentanaListaUsuario con los parámetros correctos
+                VentanaListaUsuario ventana = new VentanaListaUsuario(ventanaActual, posicion);
+                
+                // Salir del bucle una vez que se haya creado una instancia de VentanaListaUsuario
+                break;
+            }
+        }
+    });
+
     }//GEN-LAST:event_BtnLeerActionPerformed
 
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
-        
+        BtnEditar.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        VentanaEditarUsuario ventana = new VentanaEditarUsuario();
+                    }
+                });
     }//GEN-LAST:event_BtnEditarActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
-        
+        BtnEliminar.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        VentanaEliminarUsuario ventana = new VentanaEliminarUsuario();
+                    }
+                });
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
 
@@ -174,7 +230,7 @@ public class Menu extends javax.swing.JFrame {
    
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Menu().setVisible(true);
+                new VentanaMenu().setVisible(true);
             }
         });
     }
