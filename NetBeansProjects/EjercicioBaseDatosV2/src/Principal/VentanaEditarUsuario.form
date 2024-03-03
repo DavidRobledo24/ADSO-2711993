@@ -52,36 +52,36 @@
                   <EmptySpace min="50" pref="50" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="TextEliminarEmail" alignment="0" max="32767" attributes="0"/>
+                          <Component id="TextEditarEmail" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel5" alignment="0" min="-2" pref="395" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="TextEliminarBuscar" max="32767" attributes="0"/>
+                              <Component id="TextEditarBuscar" max="32767" attributes="0"/>
                               <Component id="jLabel1" pref="215" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="BtnEliminarBuscar" min="-2" pref="163" max="-2" attributes="0"/>
+                          <Component id="BtnEditarBuscar" min="-2" pref="163" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="TextEliminarNombres" alignment="0" pref="395" max="32767" attributes="0"/>
+                          <Component id="TextEditarNombres" alignment="0" pref="395" max="32767" attributes="0"/>
                           <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="TextEliminarTelefono" alignment="0" max="32767" attributes="0"/>
+                              <Component id="TextEditarTelefono" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel4" alignment="0" min="-2" pref="395" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="TextEliminarApellidos" alignment="0" max="32767" attributes="0"/>
+                              <Component id="TextEditarApellidos" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel3" alignment="0" min="-2" pref="395" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                          <Component id="BtnEliminarCancelar" min="-2" pref="139" max="-2" attributes="0"/>
+                          <Component id="BtnEditarCancelar" min="-2" pref="139" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                          <Component id="BtnEliminarBorrar" min="-2" pref="139" max="-2" attributes="0"/>
+                          <Component id="BtnEditarEdit" min="-2" pref="139" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="85" max="32767" attributes="0"/>
@@ -93,11 +93,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="BtnEliminarBuscar" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="BtnEditarBuscar" min="-2" pref="41" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="jLabel1" min="-2" pref="21" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                          <Component id="TextEliminarBuscar" min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="TextEditarBuscar" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -105,23 +105,23 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" pref="21" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                  <Component id="TextEliminarNombres" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="TextEditarNombres" min="-2" pref="31" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" pref="21" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                  <Component id="TextEliminarApellidos" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="TextEditarApellidos" min="-2" pref="31" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" pref="21" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                  <Component id="TextEliminarTelefono" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="TextEditarTelefono" min="-2" pref="31" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" pref="21" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                  <Component id="TextEliminarEmail" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="TextEditarEmail" min="-2" pref="31" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="BtnEliminarCancelar" max="32767" attributes="0"/>
-                      <Component id="BtnEliminarBorrar" max="32767" attributes="0"/>
+                      <Component id="BtnEditarCancelar" max="32767" attributes="0"/>
+                      <Component id="BtnEditarEdit" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="28" max="32767" attributes="0"/>
               </Group>
@@ -137,14 +137,14 @@
             <Property name="text" type="java.lang.String" value="Documento:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="TextEliminarBuscar">
+        <Component class="javax.swing.JTextField" name="TextEditarBuscar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Historic" size="14" style="1"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="BtnEliminarBuscar">
+        <Component class="javax.swing.JButton" name="BtnEditarBuscar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="0" red="0" type="rgb"/>
@@ -157,6 +157,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="BUSCAR!"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnEditarBuscarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
@@ -168,7 +171,7 @@
             <Property name="text" type="java.lang.String" value="Nombres:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="TextEliminarNombres">
+        <Component class="javax.swing.JTextField" name="TextEditarNombres">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Historic" size="14" style="1"/>
@@ -183,7 +186,7 @@
             <Property name="text" type="java.lang.String" value="Apellidos:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="TextEliminarApellidos">
+        <Component class="javax.swing.JTextField" name="TextEditarApellidos">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Historic" size="14" style="1"/>
@@ -198,7 +201,7 @@
             <Property name="text" type="java.lang.String" value="Telefono:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="TextEliminarTelefono">
+        <Component class="javax.swing.JTextField" name="TextEditarTelefono">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Historic" size="14" style="1"/>
@@ -213,14 +216,14 @@
             <Property name="text" type="java.lang.String" value="Correo Electronico:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="TextEliminarEmail">
+        <Component class="javax.swing.JTextField" name="TextEditarEmail">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Historic" size="14" style="1"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="BtnEliminarCancelar">
+        <Component class="javax.swing.JButton" name="BtnEditarCancelar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -231,22 +234,22 @@
             <Property name="text" type="java.lang.String" value="CANCELAR"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnEliminarCancelarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnEditarCancelarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="BtnEliminarBorrar">
+        <Component class="javax.swing.JButton" name="BtnEditarEdit">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="ff" type="rgb"/>
+              <Color blue="0" green="ff" red="0" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Historic" size="18" style="1"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="ELIMINAR"/>
+            <Property name="text" type="java.lang.String" value="EDITAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnEditarEditActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

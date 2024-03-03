@@ -1,12 +1,35 @@
 package Principal;
 
-public class VentanaEditarUsuario extends javax.swing.JFrame {
+import java.sql.*;
+import javax.swing.JOptionPane;
 
+public class VentanaEditarUsuario extends javax.swing.JFrame {
+    Connection conexion;
+    Statement manipularDB;
 
     public VentanaEditarUsuario() {
+        String hostname = "localhost";
+        String puerto = "3306";
+        String databasename = "app_java";
+        String user = "root";
+        String password = "";
+        
+        String url = "jdbc:mysql://"+hostname+":"+puerto+"/"+databasename;
+        
+        try {
+            conexion = DriverManager.getConnection(url, user, password);
+            manipularDB = conexion.createStatement();
+            System.out.println("Conexion Exitosa");
+        }
+        catch (SQLException ex) {
+            System.out.println("Error en conexion: "+ex.getMessage());
+        }
+        
         initComponents();
         initAlternComponents();
     }
+    
+    
     
     public void initAlternComponents(){
         setTitle("Formulario Edicion");
@@ -47,6 +70,11 @@ public class VentanaEditarUsuario extends javax.swing.JFrame {
         BtnEditarBuscar.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         BtnEditarBuscar.setForeground(new java.awt.Color(255, 255, 255));
         BtnEditarBuscar.setText("BUSCAR!");
+        BtnEditarBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEditarBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         jLabel2.setText("Nombres:");
@@ -80,6 +108,11 @@ public class VentanaEditarUsuario extends javax.swing.JFrame {
         BtnEditarEdit.setBackground(new java.awt.Color(0, 255, 0));
         BtnEditarEdit.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         BtnEditarEdit.setText("EDITAR");
+        BtnEditarEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEditarEditActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -169,12 +202,85 @@ public class VentanaEditarUsuario extends javax.swing.JFrame {
 
     private void BtnEditarCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarCancelarActionPerformed
         dispose();
-        
     }//GEN-LAST:event_BtnEditarCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void BtnEditarEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarEditActionPerformed
+        String cedulaAEditar = TextEditarBuscar.getText();
+        String nuevosNombres = TextEditarNombres.getText();
+        String nuevosApellidos = TextEditarApellidos.getText();
+        String nuevoTelefono = TextEditarTelefono.getText();
+        String nuevoEmail = TextEditarEmail.getText();
+    
+    // Verificar si la cédula no está vacía
+    if (!cedulaAEditar.isEmpty()) {
+        // Consulta para actualizar los datos de la persona
+        String consulta = "UPDATE personas SET nombres=?, apellidos=?, telefono=?, email=? WHERE cedula=?";
+        
+        try {
+            // Preparar la consulta
+            PreparedStatement pstmt = conexion.prepareStatement(consulta);
+            pstmt.setString(1, nuevosNombres);
+            pstmt.setString(2, nuevosApellidos);
+            pstmt.setString(3, nuevoTelefono);
+            pstmt.setString(4, nuevoEmail);
+            pstmt.setString(5, cedulaAEditar);
+            
+            
+            // Ejecutar la consulta
+            int filasActualizadas = pstmt.executeUpdate();
+            
+            if (filasActualizadas > 0) {
+                JOptionPane.showMessageDialog(this, "Los datos de la persona han sido actualizados correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo encontrar una persona con la cédula proporcionada.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al editar persona: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al editar persona: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        // Mostrar un mensaje si el campo de texto de la cédula está vacío
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese la cédula de la persona.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_BtnEditarEditActionPerformed
+
+    private void BtnEditarBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarBuscarActionPerformed
+        String cedulaABuscar = TextEditarBuscar.getText();
+
+        // Verificar si la cédula no está vacía
+        if (!cedulaABuscar.isEmpty()) {
+            // Consulta para obtener los datos de la persona por su cédula
+            String consulta = "SELECT * FROM personas WHERE cedula=?";
+            
+            try {
+                // Preparar la consulta
+                PreparedStatement pstmt = conexion.prepareStatement(consulta);
+                pstmt.setString(1, cedulaABuscar);
+                
+                // Ejecutar la consulta
+                ResultSet rs = pstmt.executeQuery();
+                
+                // Verificar si se encontraron resultados
+                if (rs.next()) {
+                    // Mostrar los datos en los campos de texto correspondientes
+                    TextEditarNombres.setText(rs.getString("nombres"));
+                    TextEditarApellidos.setText(rs.getString("apellidos"));
+                    TextEditarTelefono.setText(rs.getString("telefono"));
+                    TextEditarEmail.setText(rs.getString("email"));
+                } else {
+                    // Mostrar un mensaje si no se encontró ninguna persona con la cédula proporcionada
+                    JOptionPane.showMessageDialog(this, "No se encontró ninguna persona con la cédula proporcionada.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al buscar persona: " + e.getMessage());
+                JOptionPane.showMessageDialog(this, "Error al buscar persona: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // Mostrar un mensaje si el campo de texto de la cédula está vacío
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese la cédula de la persona.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnEditarBuscarActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

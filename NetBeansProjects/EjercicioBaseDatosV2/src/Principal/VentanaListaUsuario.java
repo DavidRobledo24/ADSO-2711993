@@ -1,17 +1,31 @@
 package Principal;
 
 import javax.swing.table.DefaultTableModel;
+import java.sql.*;
 
 public class VentanaListaUsuario extends javax.swing.JFrame {
     DefaultTableModel modelo;
-    VentanaMenu ventana;
-    int posicion;
-
-
-    public VentanaListaUsuario(VentanaMenu ventana, int posicion) {
-        this.ventana = ventana;
-        this.posicion = posicion;
+    Connection conexion;
+    Statement manipularDB;
+    
+    public VentanaListaUsuario() {
+        String hostname = "localhost";
+        String puerto = "3306";
+        String databasename = "app_java";
+        String user = "root";
+        String password = "";
         
+        String url = "jdbc:mysql://"+hostname+":"+puerto+"/"+databasename;
+        
+        try {
+            conexion = DriverManager.getConnection(url, user, password);
+            manipularDB = conexion.createStatement();
+            System.out.println("Conexion Exitosa");
+        }
+        catch (SQLException ex) {
+            System.out.println("Error en conexion: "+ex.getMessage());
+        }
+
         initComponents();
         initAlternComponents();
         imprimirUsuario();
@@ -19,18 +33,37 @@ public class VentanaListaUsuario extends javax.swing.JFrame {
     
     public void imprimirUsuario(){
         modelo.setRowCount(0);
-        for (int i = 0; i<ventana.listaPersonas.length && ventana.listaPersonas[i]!=null;i++){      
-            String documento = ventana.listaPersonas[i].getDocumento();
-            String nombres = ventana.listaPersonas[i].getNombres();
-            String apellidos = ventana.listaPersonas[i].getApellidos();
-            String telefono = ventana.listaPersonas[i].getTelefono();
-            String correo = ventana.listaPersonas[i].getCorreo();
-            int contador = i+1;
-                
-            Object datos [] = new Object[]{contador, ventana.listaPersonas[i].getDocumento(), ventana.listaPersonas[i].getNombres(),ventana.listaPersonas[i].getApellidos(),ventana.listaPersonas[i].getTelefono(),ventana.listaPersonas[i].getCorreo()};
-            modelo.addRow(datos);
+        
+        // Consulta para obtener los datos de la base de datos
+        String consulta = "SELECT * FROM personas";
+
+        try {
+            // Ejecutar la consulta
+            PreparedStatement pstmt = conexion.prepareStatement(consulta);
+            ResultSet rs = pstmt.executeQuery();
             
+            // Contador para el número de personas
+            int contador = 1;
+            
+            // Iterar a través de los resultados y agregarlos a la tabla
+            while (rs.next()) {
+                
+                Object[] fila = {
+                    contador,
+                    rs.getString("cedula"),
+                    rs.getString("nombres"),
+                    rs.getString("apellidos"),
+                    rs.getString("telefono"),
+                    rs.getString("email")
+                };
+                modelo.addRow(fila);
+                
+                contador++; // Aumentar el contador
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al llenar la tabla: " + e.getMessage());
         }
+        
     }
 
     
@@ -59,8 +92,7 @@ public class VentanaListaUsuario extends javax.swing.JFrame {
         TablaUsuario.getColumnModel().getColumn(3).setPreferredWidth(120);
         TablaUsuario.getColumnModel().getColumn(4).setPreferredWidth(120);
         TablaUsuario.getColumnModel().getColumn(4).setPreferredWidth(120);
-    }
-    @SuppressWarnings("unchecked")
+    }    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

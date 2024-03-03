@@ -1,21 +1,33 @@
 package Principal;
 
-import Utils.ClassPersona;
 import javax.swing.JOptionPane;
+import java.sql.*;
 
 public class VentanaCrearUsuario extends javax.swing.JFrame {
-    
-    VentanaMenu ventana;
-    int posicion;
+        Connection conexion;
+        Statement manipularDB;
 
-    public VentanaCrearUsuario(VentanaMenu ventana, int posicion) {
-        this.ventana = ventana;
-        this.posicion = posicion;
+    public VentanaCrearUsuario() {
+        String hostname = "localhost";
+        String puerto = "3306";
+        String databasename = "app_java";
+        String user = "root";
+        String password = "";
+        
+        String url = "jdbc:mysql://"+hostname+":"+puerto+"/"+databasename;
+        
+        try {
+            conexion = DriverManager.getConnection(url, user, password);
+            manipularDB = conexion.createStatement();
+            System.out.println("Conexion Exitosa");
+        }
+        catch (SQLException ex) {
+            System.out.println("Error en conexion: "+ex.getMessage());
+        }
         
         initComponents();
-        initAlternComponents();
+        initAlternComponents();        
     }
-    
     
     public void initAlternComponents(){
         setTitle("Formulario Crear Usuario");
@@ -162,71 +174,57 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnCrearCancelarActionPerformed
 
     private void BtnCrearAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCrearAgregarActionPerformed
-        //.trim() sirve para eliminar los espacion en blanco al principio y al final del texto
-        String documento = TextDocumento.getText().trim();
-        String nombres = TextNombres.getText().trim();
-        String apellidos = TextApellidos.getText().trim();
-        String telefono = TextTelefono.getText().trim();
-        String correo = TextCorreo.getText().trim();
+        String cedula = TextDocumento.getText();
+        String nombres = TextNombres.getText();
+        String apellidos = TextApellidos.getText();
+        String telefono = TextTelefono.getText();
+        String direccion = "";
+        String email = TextCorreo.getText();
 
-        // Validar campos vacíos
-        if (documento.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        // Verificar si todos los campos están llenos
+        if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Por favor, complete todos los campos.");
+        } else {
+            // Consulta para verificar si la cédula ya existe
+            String consultaCedulaExistente = "SELECT COUNT(*) FROM personas WHERE cedula = ?";
+            try (PreparedStatement pstmtConsulta = conexion.prepareStatement(consultaCedulaExistente)) {
+                pstmtConsulta.setString(1, cedula);
+                ResultSet rs = pstmtConsulta.executeQuery();
+                rs.next();
+                int count = rs.getInt(1);
+        
+                // Si la cédula ya existe, muestra un mensaje de error y no insertes los datos
+                if (count > 0) {
+                    JOptionPane.showMessageDialog(this, "La cédula ya existe en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    System.out.println("La cédula ya existe en la base de datos.");
+                } else {
+                    // Si la cédula no existe y todos los campos están llenos, procede con la inserción de datos
+                    String consultaInsercion = "INSERT INTO personas (cedula, nombres, apellidos, direccion, telefono, email) VALUES (?,?,?,?,?,?)";
+                    try (PreparedStatement pstmtInsercion = conexion.prepareStatement(consultaInsercion)) {
+                        pstmtInsercion.setString(1, cedula);
+                        pstmtInsercion.setString(2, nombres);
+                        pstmtInsercion.setString(3, apellidos);
+                        pstmtInsercion.setString(4, direccion);
+                        pstmtInsercion.setString(5, telefono);
+                        pstmtInsercion.setString(6, email);
 
-        boolean disponible = false;
+                        pstmtInsercion.executeUpdate();
 
-        for (int i = 0; i < ventana.listaPersonas.length; i++) {
-            if (ventana.listaPersonas[i] == null) {
-                disponible = true;
-                break;
-            }
-        }
+                        TextDocumento.setText("");
+                        TextNombres.setText("");
+                        TextApellidos.setText("");
+                        TextTelefono.setText("");
+                        TextCorreo.setText("");
 
-        if (disponible) {
-            // Validar que el documento contenga solo números
-            if (!documento.matches("\\d+")) {
-                JOptionPane.showMessageDialog(this, "El documento debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-        // Validar que el documento no esté repetido
-        boolean documentoRepetido = false;
-
-        for (ClassPersona persona : ventana.listaPersonas) {
-            if (persona != null && persona.getDocumento().equals(documento)) {
-                documentoRepetido = true;
-                JOptionPane.showMessageDialog(this, "El número de documento está repetido.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-
-        // Agregar la persona si no hay documento repetido
-        if (!documentoRepetido) {
-            for (int i = 0; i < ventana.listaPersonas.length; i++) {
-                if (ventana.listaPersonas[i] == null) {
-                    ventana.listaPersonas[i] = new ClassPersona(documento, nombres, apellidos, telefono, correo);
-                    System.err.print("Se agregó la persona");
-                    break;
+                        System.out.println("Datos insertados correctamente.");
+                    } catch (SQLException e) {
+                        System.out.println("Error al insertar datos: " + e.getMessage());
+                    }
                 }
+            } catch (SQLException e) {
+                System.out.println("Error al consultar la base de datos: " + e.getMessage());
             }
-
-        for (int j = 0; j < ventana.listaPersonas.length; j++) {
-            System.out.println(ventana.listaPersonas[j]);
-        }
-
-        // Limpiar los campos
-        TextDocumento.setText("");
-        TextNombres.setText("");
-        TextApellidos.setText("");
-        TextTelefono.setText("");
-        TextCorreo.setText("");
-        }
-    } 
-        else {
-        JOptionPane.showMessageDialog(this, "No hay más espacio.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
         }
 
     }//GEN-LAST:event_BtnCrearAgregarActionPerformed

@@ -1,9 +1,29 @@
 package Principal;
 
+import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class VentanaEliminarUsuario extends javax.swing.JFrame {
-
+    Connection conexion;
+    Statement manipularDB;
     public VentanaEliminarUsuario() {
+        String hostname = "localhost";
+        String puerto = "3306";
+        String databasename = "app_java";
+        String user = "root";
+        String password = "";
+        
+        String url = "jdbc:mysql://"+hostname+":"+puerto+"/"+databasename;
+        
+        try {
+            conexion = DriverManager.getConnection(url, user, password);
+            manipularDB = conexion.createStatement();
+            System.out.println("Conexion Exitosa");
+        }
+        catch (SQLException ex) {
+            System.out.println("Error en conexion: "+ex.getMessage());
+        }
+        
         initComponents();
         initAlternComponents();
     }
@@ -23,13 +43,13 @@ public class VentanaEliminarUsuario extends javax.swing.JFrame {
         BtnEliminarBuscar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        TextEliminarNombres = new javax.swing.JTextField();
+        campoNombres = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        TextEliminarApellidos = new javax.swing.JTextField();
+        campoApellidos = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        TextEliminarTelefono = new javax.swing.JTextField();
+        campoTelefono = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        TextEliminarEmail = new javax.swing.JTextField();
+        campoCorreo = new javax.swing.JLabel();
         BtnEliminarCancelar = new javax.swing.JButton();
         BtnEliminarBorrar = new javax.swing.JButton();
 
@@ -46,26 +66,35 @@ public class VentanaEliminarUsuario extends javax.swing.JFrame {
         BtnEliminarBuscar.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         BtnEliminarBuscar.setForeground(new java.awt.Color(255, 255, 255));
         BtnEliminarBuscar.setText("BUSCAR!");
+        BtnEliminarBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         jLabel2.setText("Nombres:");
 
-        TextEliminarNombres.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        campoNombres.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        campoNombres.setForeground(new java.awt.Color(255, 51, 51));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         jLabel3.setText("Apellidos:");
 
-        TextEliminarApellidos.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        campoApellidos.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        campoApellidos.setForeground(new java.awt.Color(255, 51, 51));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         jLabel4.setText("Telefono:");
 
-        TextEliminarTelefono.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        campoTelefono.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        campoTelefono.setForeground(new java.awt.Color(255, 51, 51));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         jLabel5.setText("Correo Electronico:");
 
-        TextEliminarEmail.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        campoCorreo.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        campoCorreo.setForeground(new java.awt.Color(255, 51, 51));
 
         BtnEliminarCancelar.setBackground(new java.awt.Color(204, 204, 204));
         BtnEliminarCancelar.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
@@ -80,6 +109,11 @@ public class VentanaEliminarUsuario extends javax.swing.JFrame {
         BtnEliminarBorrar.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         BtnEliminarBorrar.setForeground(new java.awt.Color(255, 255, 255));
         BtnEliminarBorrar.setText("ELIMINAR");
+        BtnEliminarBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarBorrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,25 +126,21 @@ public class VentanaEliminarUsuario extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(TextEliminarEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(TextEliminarBuscar)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(BtnEliminarBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(TextEliminarNombres, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(TextEliminarTelefono, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(TextEliminarApellidos, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(BtnEliminarCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,21 +162,21 @@ public class VentanaEliminarUsuario extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addComponent(TextEliminarNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(campoNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addComponent(TextEliminarApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(campoApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addComponent(TextEliminarTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addComponent(TextEliminarEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
+                .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BtnEliminarCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnEliminarBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -170,6 +200,75 @@ public class VentanaEliminarUsuario extends javax.swing.JFrame {
     private void BtnEliminarCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_BtnEliminarCancelarActionPerformed
+
+    private void BtnEliminarBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarBuscarActionPerformed
+        String cedulaABuscar = TextEliminarBuscar.getText();
+
+        // Verificar si la cédula no está vacía
+        if (!cedulaABuscar.isEmpty()) {
+            // Consulta para obtener los datos de la persona por su cédula
+            String consulta = "SELECT * FROM personas WHERE cedula=?";
+            
+            try {
+                // Preparar la consulta
+                PreparedStatement pstmt = conexion.prepareStatement(consulta);
+                pstmt.setString(1, cedulaABuscar);
+                
+                // Ejecutar la consulta
+                ResultSet rs = pstmt.executeQuery();
+                
+                // Verificar si se encontraron resultados
+                if (rs.next()) {
+                    // Mostrar los datos en los campos de texto correspondientes
+                    campoNombres.setText(rs.getString("nombres"));
+                    campoApellidos.setText(rs.getString("apellidos"));
+                    campoTelefono.setText(rs.getString("telefono"));
+                    campoCorreo.setText(rs.getString("email"));
+                } else {
+                    // Mostrar un mensaje si no se encontró ninguna persona con la cédula proporcionada
+                    JOptionPane.showMessageDialog(this, "No se encontró ninguna persona con la cédula proporcionada.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al buscar persona: " + e.getMessage());
+                JOptionPane.showMessageDialog(this, "Error al buscar persona: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // Mostrar un mensaje si el campo de texto de la cédula está vacío
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese la cédula de la persona.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnEliminarBuscarActionPerformed
+
+    private void BtnEliminarBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarBorrarActionPerformed
+        // Obtener la cédula de la persona a eliminar del campo de texto TextEliminarCedula
+    String cedulaAEliminar = TextEliminarBuscar.getText();
+    
+    // Verificar si la cédula no está vacía
+    if (!cedulaAEliminar.isEmpty()) {
+        // Consulta para eliminar la persona de la base de datos
+        String consulta = "DELETE FROM personas WHERE cedula=?";
+        
+        try {
+            // Preparar la consulta
+            PreparedStatement pstmt = conexion.prepareStatement(consulta);
+            pstmt.setString(1, cedulaAEliminar);
+            
+            // Ejecutar la consulta
+            int filasEliminadas = pstmt.executeUpdate();
+            
+            if (filasEliminadas > 0) {
+                JOptionPane.showMessageDialog(this, "La persona ha sido eliminada correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo encontrar una persona con la cédula proporcionada.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar persona: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al eliminar persona: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        // Mostrar un mensaje si el campo de texto de la cédula está vacío
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese la cédula de la persona que desea eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnEliminarBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,11 +310,11 @@ public class VentanaEliminarUsuario extends javax.swing.JFrame {
     private javax.swing.JButton BtnEliminarBorrar;
     private javax.swing.JButton BtnEliminarBuscar;
     private javax.swing.JButton BtnEliminarCancelar;
-    private javax.swing.JTextField TextEliminarApellidos;
     private javax.swing.JTextField TextEliminarBuscar;
-    private javax.swing.JTextField TextEliminarEmail;
-    private javax.swing.JTextField TextEliminarNombres;
-    private javax.swing.JTextField TextEliminarTelefono;
+    private javax.swing.JLabel campoApellidos;
+    private javax.swing.JLabel campoCorreo;
+    private javax.swing.JLabel campoNombres;
+    private javax.swing.JLabel campoTelefono;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

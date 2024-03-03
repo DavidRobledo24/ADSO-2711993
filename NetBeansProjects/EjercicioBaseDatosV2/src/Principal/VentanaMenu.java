@@ -1,23 +1,34 @@
 package Principal;
 
-import Utils.ClassPersona;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableCellRenderer;
-
-
+import java.sql.*;
 
 public class VentanaMenu extends javax.swing.JFrame {
-    ClassPersona listaPersonas[];
-
+        Connection conexion;
+        Statement manipularDB;
     
-    public VentanaMenu() { 
+    public VentanaMenu() {
+        String hostname = "localhost";
+        String puerto = "3306";
+        String databasename = "app_java";
+        String user = "root";
+        String password = "";
         
-        listaPersonas = new ClassPersona[10];
-        listaPersonas[0] = new ClassPersona("1010105189", "David", "Robledo", "3217254256","david@gmial.com");
-        listaPersonas[1] = new ClassPersona("3645667", "Manuel", "castillo", "4564635","manuel@gmial.com"); 
+        String url = "jdbc:mysql://"+hostname+":"+puerto+"/"+databasename;
+        
+        try {
+            conexion = DriverManager.getConnection(url, user, password);
+            manipularDB = conexion.createStatement();
+            System.out.println("Conexion Exitosa");
+        }
+        catch (SQLException ex) {
+            System.out.println("Error en conexion: "+ex.getMessage());
+        }
+        
         initComponents();
         initAlternComponents();
     }
@@ -27,13 +38,9 @@ public class VentanaMenu extends javax.swing.JFrame {
         setVisible(true);
         setTitle("Menu");
         
-        
-        
-
         Image crear_usuario = getToolkit().createImage(ClassLoader.getSystemResource("imagenes/crear_usuario.png"));
         crear_usuario = crear_usuario.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         BtnCrear.setIcon(new ImageIcon(crear_usuario) );
-        
         
         Image buscar_usuario = getToolkit().createImage(ClassLoader.getSystemResource("imagenes/buscar_usuario.png"));
         buscar_usuario = buscar_usuario.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
@@ -46,7 +53,6 @@ public class VentanaMenu extends javax.swing.JFrame {
         Image eliminar_usuario = getToolkit().createImage(ClassLoader.getSystemResource("imagenes/eliminar_usuario.png"));
         eliminar_usuario = eliminar_usuario.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         BtnEliminar.setIcon(new ImageIcon(eliminar_usuario) );
-        
         
         DefaultTableCellRenderer centerRender = new DefaultTableCellRenderer();
     }
@@ -162,67 +168,40 @@ public class VentanaMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCrearActionPerformed
-        for (int i = 0; i < listaPersonas.length && listaPersonas[i] != null; i++) {
-            VentanaMenu ventanaActual = this;
-            final int posicion = i;
-
-            for (ActionListener al : BtnCrear.getActionListeners()) {
-                BtnCrear.removeActionListener(al);
-            }
-
- 
-            BtnCrear.addActionListener(new ActionListener() {
-                    @Override
-                public void actionPerformed(ActionEvent e) {    
-                VentanaCrearUsuario ventana = new VentanaCrearUsuario(ventanaActual, posicion);
-                }
-            });    
-        }     
+        for (ActionListener al : BtnCrear.getActionListeners()) {
+            BtnCrear.removeActionListener(al);
+        }
+        
+        BtnCrear.addActionListener((ActionEvent e) -> {
+            VentanaCrearUsuario ventana = new VentanaCrearUsuario();
+        });
     }//GEN-LAST:event_BtnCrearActionPerformed
 
     private void BtnLeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLeerActionPerformed
         for (ActionListener al : BtnLeer.getActionListeners()) {
-        BtnLeer.removeActionListener(al);
-    }
-    
-    // Agregar un ActionListener al botón
-    BtnLeer.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // Iterar sobre el array listaPersonas
-            for(int i = 0; i < listaPersonas.length && listaPersonas[i] != null; i++){
-                VentanaMenu ventanaActual = VentanaMenu.this; // Acceder al objeto VentanaMenu desde ActionListener
-                
-                // Obtener la posición seleccionada
-                int posicion = i;
-                
-                // Crear una instancia de VentanaListaUsuario con los parámetros correctos
-                VentanaListaUsuario ventana = new VentanaListaUsuario(ventanaActual, posicion);
-                
-                // Salir del bucle una vez que se haya creado una instancia de VentanaListaUsuario
-                break;
-            }
+            BtnLeer.removeActionListener(al);
         }
-    });
-
+        BtnLeer.addActionListener((ActionEvent e) -> {
+            VentanaListaUsuario ventana = new VentanaListaUsuario();
+        });
     }//GEN-LAST:event_BtnLeerActionPerformed
 
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
-        BtnEditar.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        VentanaEditarUsuario ventana = new VentanaEditarUsuario();
-                    }
-                });
+        for (ActionListener al : BtnEditar.getActionListeners()) {
+            BtnEditar.removeActionListener(al);
+        }
+        BtnEditar.addActionListener((ActionEvent e) -> {
+            VentanaEditarUsuario ventana = new VentanaEditarUsuario();
+        });
     }//GEN-LAST:event_BtnEditarActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
-        BtnEliminar.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        VentanaEliminarUsuario ventana = new VentanaEliminarUsuario();
-                    }
-                });
+        for (ActionListener al : BtnEliminar.getActionListeners()) {
+            BtnEliminar.removeActionListener(al);
+        }
+        BtnEliminar.addActionListener((ActionEvent e) -> {
+            VentanaEliminarUsuario ventana = new VentanaEliminarUsuario();
+        });
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
 
