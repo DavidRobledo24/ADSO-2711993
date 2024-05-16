@@ -23,17 +23,21 @@ function consumoApi(){
     paginaSpan.innerText = cont;
 }
 
-function cargarDetalle(endPoint){
-
+function cargarDetalle(endPoint) {
     fetch(endPoint)
         .then(resp => resp.json())
         .then(data => {
-
-            nombrePokemon.innerHTML = data.name
-            imagenPokemon.src = data.sprites.other.dream_world.front_default
-    });
+            nombrePokemon.innerHTML = data.name;
+            imagenPokemon.src = data.sprites.front_default; // Ajusta esta línea según la estructura real de los datos
+        })
+        .catch(error => {
+            console.error('Error fetching Pokemon detail:', error);
+        });
 }
+
 
 function cambioPagina(){
     
 }
+
+consumoApi();
