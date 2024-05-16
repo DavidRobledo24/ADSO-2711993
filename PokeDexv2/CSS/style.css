@@ -1,0 +1,42 @@
+#cajaPrincipal{
+    border: 1px solid blue;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#cajaPokemon{
+    height: 400px;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+#contenidoPokemon{
+    text-align: center;
+}
+#cajaLista{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    
+}
+button{
+    height: 40px;
+    margin: 10px;
+}
+#cajaBotones{
+    text-align: center;
+}
+.cargando{
+    margin: auto;
+}
+.esconder{
+    display: none;
+}
+.gridCargando{
+    grid-row-start: 1;
+    grid-column-start: 1;
+}
+#cajaInferior{
+    border: 1px red solid;
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 359px;
+}
