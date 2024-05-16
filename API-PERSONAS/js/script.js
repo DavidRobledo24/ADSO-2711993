@@ -1,5 +1,6 @@
 const filas = document.getElementById('filas');
 const formInsertar = document.getElementById('formInsertar');
+let myModal = new boostrap.Modal(document.getElementById('modalInsetar'));
 formInsertar.addEventListener("submit", function(event){
     event.preventDefault();
     agregarPersona();
@@ -12,7 +13,7 @@ function llamarPersonas(){
     
     fetch(endPoint) .then(resp => resp.json())
     .then(data => {
-        for(var i = 0; i<=data.length;i++){
+        for(var i = 0; i<data.length;i++){
                 let temp = `<tr>
                                 <td>${i+1}</td>
                                 <td>${data[i].cedula}</td>
@@ -22,9 +23,9 @@ function llamarPersonas(){
                                 <td class="text-center">${data[i].direccion}</td>
                                 <td class="text-center">${data[i].email}</td>
                                 <td>
-                                    <button class="btn btn-danger" onClick="eliminarPersona(${data[i].cedula})> X </button>
+                                    <button class="btn btn-danger d-flex justify-content-center" onClick="eliminarPersona(${data[i].cedula})">X</button>
                                 </td>
-                            <tr>`
+                            <tr>`;
             filas.innerHTML += temp;
         }
     });      
@@ -48,15 +49,39 @@ function agregarPersona(){
         console.log(data);
 
         if(data.status){
-            var myModal = new boostrap.Modal(document.getElementById('modalInsetar'));
+            
             myModal.hide();
+            llamarPersonas();
         }else{
             alert("Error al insertar");
         }
     });
 }
 
-function eliminarPersona(){
+function eliminarPersona(cedula){
+    let datos = new FormData();
+    datos.append("cedula", cedula);
+
+    let configuracion = {
+        method: "POST",
+        Headers : {
+                "Accept" : "application/json",
+            },
+        body: datos
+    };
+
+    fetch("https://codetesthub.com/API/Eliminar.php", configuracion)
+    .then(resp => resp.json())
+    .then(data => {
+        console.log("la api responde con: ");
+        console.log(data);
+
+        if(data.status){
+            llamarPersonas();
+        }else{
+            alert("Error al eliminar");
+        }
+    });
 
 }
 
